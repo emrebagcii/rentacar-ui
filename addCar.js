@@ -1,7 +1,7 @@
 const jwtToken = localStorage.getItem('jwtToken');
 
 function updateTable(){
-    fetch('http://localhost:8080/car',{
+    fetch('http://localhost:8080/car/getCarList',{
         method:'GET',
         headers:{
             'Content-type':'application/json',
@@ -17,7 +17,7 @@ function updateTable(){
 
         data.forEach(function(car){
             var row = "<tr>" +
-            "<td>"+car.categoryId+"</td>"+
+            "<td>"+car.categoryName+"</td>"+
             "<td>"+car.brand+"</td>"+
             "<td>"+car.model+"</td>"+
             "<td>"+car.color+"</td>"+
@@ -85,7 +85,7 @@ function addCar(){
 }
 
 function categoryDropdownList(){
-    fetch('http://localhost:8080/category',{
+    fetch('http://localhost:8080/category/active',{
         method:'GET',
         headers:{
             'Content-type':'application/json',
