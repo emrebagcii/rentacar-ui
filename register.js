@@ -43,7 +43,7 @@ function districtDropdownList(cityId){
     .then(data=>{
         var districtDropdown=document.getElementById('district');
 
-        districtDropdown.innerHTML=''
+        
 
         data.forEach(district=>{
             var option = document.createElement('option');
@@ -84,6 +84,8 @@ function addUser(){
         addressLine:addressLine,
         roles:"USER"
     };
+
+    console.log(userData);
 
     fetch('http://localhost:8080/user/addUser',{
         method:'POST',

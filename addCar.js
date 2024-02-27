@@ -26,10 +26,10 @@ function updateTable(){
             "<td>"+car.fuelType+"</td>"+
             "<td>"+car.rentPrice+"</td>"+
             "<td>"+car.availableCar+"</td>"+
-            "<button type='button' class='btn btn-info' data-toggle='modal' data-target='#editModal' onclick='openEditModal(" + car.id + ")'>Edit</button> | " +
-                    "<button type='button' class='btn btn-danger' onclick='deleteCategory(" + car.id + ")'>Delete</button>" +
-                    "</td>" +
-                    "</tr>";
+            "<td> <button type='button' class='btn btn-info' data-toggle='modal' data-target='#editModal' onclick='openEditModal(" + car.id + ")'>Edit</button> | " +
+            "<button type='button' class='btn btn-danger' onclick='deleteCategory(" + car.id + ")'>Delete</button>" +
+            "</td>" +
+            "</tr>";
             tableBody.innerHTML += row;
         });
     })
