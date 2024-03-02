@@ -27,6 +27,7 @@
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="addCar.html">Araç Ekleme</a></li>
                           <li><a class="dropdown-item" href="addCategory.html">Kategori Ekle</a></li>
+                          <li><a class="dropdown-item" href="addCategory.html">Araç Envanteri</a></li>
                         </ul>
                       </li>
                     <li class="nav-item dropdown">
@@ -48,38 +49,34 @@
         </nav>
     </header>
     <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="mb-0">Araç Listesi</h3>
-                    </div>
-                    <div class="card-body">
-                        <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addCarModal">Yeni Araç Ekle</button>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Kategori</th>
-                                    <th>Marka</th>
-                                    <th>Model</th>
-                                    <th>Renk</th>
-                                    <th>Yıl</th>
-                                    <th>Vites</th>
-                                    <th>Yakıt</th>
-                                    <th>Günlük Ücret</th>
-                                    <th>Stok</th>
-                                    <th>Durum</th>
-                                </tr>
-                            </thead>
-                            <tbody id="carTableBody">
-                                <!--Araçlar buraya dinamik olarak eklenecek-->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <div class="card-body">
+            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCarModal">Marka-Model Ekle</button>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Marka</th>
+                        <th>Model</th>
+                        <th>Renk</th>
+                        <th>Yıl</th>
+                        <th>Vites</th>
+                        <th>Yakıt</th>
+                        <th>Günlük Ücret</th>
+                        <th>Stok</th>
+                        <th>Durum</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody id="carTableBody">
+                    <!--Araçlar buraya dinamik olarak eklenecek-->
+                </tbody>
+            </table>
             </div>
         </div>
     </div>
+    
     <!--Add Car Modal-->
     <div class="modal fade" id="addCarModal" tabindex="-1" aria-labelledby="addCarModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -120,7 +117,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="carFuel" class="form-label">Yakıt Tipi</label>
-                            <select type="text" id="carFuel" class="form-control" name="carTransmission">
+                            <select type="text" id="carFuel" class="form-control" name="carFuel">
                                 <option value="">Yakıt Tipi Seçiniz</option>
                                 <option value="GASOLINE">Benzin</option>
                                 <option value="DIESEL">Dizel</option>
@@ -138,6 +135,94 @@
             </div>
         </div>
     </div>
+
+    <!--Edit Car Modal-->
+    <div class="modal fade" id="editCarModal" tabindex="-1" aria-labelledby="editCarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCarModalLabel">Aracı Güncelle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="carForm" enctype="multipart/form-data">
+                        <input type="hidden" id="editCarId" name="editCarId">
+                        <div class="mb-3">
+                            <label for="carCategory" class="form-label">Kategori</label>
+                            <select type="text" id="editCarCategory" class="form-control" onchange="onEditCategoryChange()" name="editCarCategory">Kategori Seçiniz</select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carBrand" class="form-label">Marka</label>
+                            <input type="text" class="form-control" id="editCarBrand" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carModel" class="form-label">Model</label>
+                            <input type="text" class="form-control" id="editCarModel" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carColor" class="form-label">Renk</label>
+                            <input type="text" class="form-control" id="editCarColor" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carYear" class="form-label">Yıl</label>
+                            <input type="number" class="form-control" id="editCarYear" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carTransmission" class="form-label">Vites</label>
+                            <select type="text" id="editCarTransmission" class="form-control" name="editCarTransmission">
+                                <option value="">Vites Tipi Seçiniz</option>
+                                <option value="AUTOMATIC">Otomatik</option>
+                                <option value="MANUAL">Düz</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carFuel" class="form-label">Yakıt Tipi</label>
+                            <select type="text" id="editCarFuel" class="form-control" name="editCarFuel">
+                                <option value="">Yakıt Tipi Seçiniz</option>
+                                <option value="GASOLINE">Benzin</option>
+                                <option value="DIESEL">Dizel</option>
+                                <option value="ELECTRIC">Elektrik</option>
+                                <option value="HYBRID">Hibrit</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCarPrice" class="form-label">Günlük Ücret</label>
+                            <input type="number" class="form-control" id="editCarPrice" required>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="editCarBtn" onclick="updateCar()">Araç Güncelle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Add CarDetail Modal-->
+    <div class="modal fade" id="addCarDetailModal" tabindex="-1" aria-labelledby="addCarDetailModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCarDetailModal">Yeni Araç Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="carDetailForm" enctype="multipart/form-data">
+                        <input type="hidden" id="addCarId" name="addCarId">
+                        <div class="form-group">
+                            <label for="carKilometer" class="form-label">Kilometre</label>
+                            <input type="number" class="form-control" id="carKilometer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carPlate" class="form-label">Plaka</label>
+                            <input type="text" class="form-control" id="carPlate" required>
+                        </div>
+                        <div class="mb-3">
+                        <button type="button" class="btn btn-primary" id="addCarDetailBtn" onclick="addCarDetail()">Bilgileri Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-dark text-light text-center p-3 mt-8 fixed-bottom">
         &copy; 2024 Rent a Car Uygulaması
         Tüm hakkı saklıdır.
@@ -159,6 +244,15 @@
             }
         }
     </script>
+    <script>
+        $(document).ready(function () {
+            $('#addCarDetailModal').on('hidden.bs.modal', function () {
+                // Modal kapatıldığında arka plan elemanını temizle
+                $('.modal-backdrop').remove();
+            });
+        });
+    </script>
+
     <script src="addCar.js"></script>
     <style></style>
 </body>

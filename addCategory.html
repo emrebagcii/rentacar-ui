@@ -118,7 +118,14 @@
                 document.getElementById('pageContent').innerHTML = '<h1>Kategori Ekle</h1>';
             }
         }
-
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#editModal').on('hidden.bs.modal', function () {
+                // Modal kapatıldığında arka plan elemanını temizle
+                $('.modal-backdrop').remove();
+            });
+        });
     </script>
     <script src="addCategory.js"></script>
     <style></style>
