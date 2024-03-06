@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Araç Envanteri</title>
+    <link rel=”stylesheet” type=”text/css” href=”admin.css” />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+</head>
+<body class="bg-light">
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="admin.html" onclick="loadPage('admin')">Admin Page</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Araç Yönetimi
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="addCar.html">Araç Ekleme</a></li>
+                          <li><a class="dropdown-item" href="addCategory.html">Kategori Ekle</a></li>
+                          <li><a class="dropdown-item" href="carInventory.html">Araç Envanteri</a></li>
+                        </ul>
+                      </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Müşteri Yönetimi
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Aktif Kiralamalar</a></li>
+                          <li><a class="dropdown-item" href="#">Geçmiş Kiralamalar</a></li>
+                          <li><a class="dropdown-item" href="user.html">Kullanıcılar</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="loadPage('logout')">Çıkış</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-5">
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Marka</th>
+                        <th>Model</th>
+                        <th>Yıl</th>
+                        <th>Plaka</th>
+                        <th>Renk</th>
+                        <th>Vites</th>
+                        <th>Yakıt</th>
+                        <th>Durum</th>
+                        <th>Kiralama Durumu</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody id="carInventoryTable">
+                    <!--Araçlar buraya dinamik olarak eklenecek-->
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Show Rent Modal-->
+    <div class="modal fade" id="showRentModal" tabindex="-1" aria-labelledby="showRentModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="showRentModal">Kiralama</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="rentForm" enctype="multipart/form-data">
+                        <input type="hidden" id="rentId" name="rentId">
+                        <input type="hidden" id="carId" name="carId">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">Ad</label>
+                            <input type="text" class="form-control" id="firstName" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Soyad</label>
+                            <input type="text" class="form-control" id="lastName" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rentCity" class="form-label">Kiralama Şehri</label>
+                            <input type="text" class="form-control" id="rentCity" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deliveryCity" class="form-label">Teslim Şehri</label>
+                            <input type="text" class="form-control" id="deliveryCity" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carBrand" class="form-label">Marka</label>
+                            <input type="text" class="form-control" id="carBrand" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carModel" class="form-label">Model</label>
+                            <input type="text" class="form-control" id="carModel" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carTransmission" class="form-label">Vites</label>
+                            <input type="text" class="form-control" id="carTransmission" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carFuel" class="form-label">Yakıt</label>
+                            <input type="text" class="form-control" id="carFuel" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carPlate" class="form-label">Plaka</label>
+                            <input type="text" class="form-control" id="carPlate" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carColor" class="form-label">Renk</label>
+                            <input type="text" class="form-control" id="carColor" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rentDate" class="form-label">Kiralama Tarihi</label>
+                            <input type="datetime" class="form-control" id="rentDate" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deliveryDate" class="form-label">Teslim Tarihi</label>
+                            <input type="datetime" class="form-control" id="deliveryDate" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rentingDay" class="form-label">Kiralama Gün</label>
+                            <input type="number" class="form-control" id="rentingDay" disabled>
+                        </div>
+                        <button type="button" class="btn btn-danger" id="endRentBtn" onclick="endRenting()">Kiralamayı Sonlandır</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+        
+    <footer class="bg-dark text-light text-center p-3 mt-8 fixed-bottom">
+        &copy; 2024 Rent a Car Uygulaması
+        Tüm hakkı saklıdır.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function loadPage(page) {
+            if(page==='category'){
+                window.location.href='category.html';
+            } else if(page === 'logout'){
+                window.location.href='login.html';
+            } else{
+                document.getElementById('pageContent').innerHTML='<h1>Admin Sayfasına Hoşgeldiniz</h1>';
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#addCarDetailModal').on('hidden.bs.modal', function () {
+                // Modal kapatıldığında arka plan elemanını temizle
+                $('.modal-backdrop').remove();
+            });
+        });
+    </script>
+
+    <script src="carInventory.js"></script>
+    <style></style>
+</body>
+</html>

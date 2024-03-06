@@ -28,7 +28,6 @@ function updateTable(){
             "<td>"+car.categoryName+"</td>"+
             "<td>"+car.brand+"</td>"+
             "<td>"+car.model+"</td>"+
-            "<td>"+car.color+"</td>"+
             "<td>"+car.year+"</td>"+
             "<td>"+car.transmission+"</td>"+
             "<td>"+car.fuelType+"</td>"+
@@ -58,7 +57,6 @@ function addCar(){
     const carCategory = document.getElementById('carCategory').value;
     const carBrand = document.getElementById('carBrand').value;
     const carModel = document.getElementById('carModel').value;
-    const carColor = document.getElementById('carColor').value;
     const carYear = document.getElementById('carYear').value;
     const carTransmission = document.getElementById('carTransmission').value;
     const carFuel = document.getElementById('carFuel').value;
@@ -67,7 +65,6 @@ function addCar(){
         categoryId:carCategory,
         brand:carBrand,
         model:carModel,
-        color:carColor,
         year:carYear,
         transmission:carTransmission,
         fuelType:carFuel,
@@ -158,7 +155,6 @@ function openEditCarModal(id){
             document.getElementById('carCategory').value=car.categoryName;
             document.getElementById('editCarBrand').value=car.brand;
             document.getElementById('editCarModel').value=car.model;
-            document.getElementById('editCarColor').value=car.color;
             document.getElementById('editCarYear').value=car.year
             document.getElementById('editCarTransmission').value=car.transmission;
             document.getElementById('editCarFuel').value=car.fuelType;
@@ -174,7 +170,6 @@ function updateCar(){
     const carCategory = document.getElementById('editCarCategory').value;
     const carBrand = document.getElementById('editCarBrand').value;
     const carModel = document.getElementById('editCarModel').value;
-    const carColor = document.getElementById('editCarColor').value;
     const carYear = document.getElementById('editCarYear').value;
     const carTransmission = document.getElementById('editCarTransmission').value;
     const carFuel = document.getElementById('editCarFuel').value;
@@ -183,7 +178,6 @@ function updateCar(){
         categoryId:carCategory,
         brand:carBrand,
         model:carModel,
-        color:carColor,
         year:carYear,
         transmission:carTransmission,
         fuelType:carFuel,
