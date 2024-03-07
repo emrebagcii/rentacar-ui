@@ -80,7 +80,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="showRentModal">Kiralama</h5>
+                    <h5 class="modal-title" id="showRentModal">Kiralama Özeti</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -141,12 +141,65 @@
                             <label for="rentingDay" class="form-label">Kiralama Gün</label>
                             <input type="number" class="form-control" id="rentingDay" disabled>
                         </div>
-                        <button type="button" class="btn btn-danger" id="endRentBtn" onclick="endRenting()">Kiralamayı Sonlandır</button>
+                       <button type="button" class="btn btn-danger" id="endRentBtn">Kiralamayı Sonlandır</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+        <!--Create Modal-->
+        <div class="modal fade" id="createRentModal" tabindex="-1" aria-labelledby="createRentModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createRentModal">Kiralama</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="rentForm" enctype="multipart/form-data">
+                            <input type="text" id="carDetailId" name="carDetailId">
+                            <input type="text" id="carId" name="carId">
+                            <div class="mb-3">
+                                <label for="createRentCity" class="form-label">Alış Şehir</label>
+                                <select type="text" id="createRentCity" class="form-control" name="createRentCity" onchange="onRentCityChange()">Alış Şehir</select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="createDeliveryCity" class="form-label">Teslim Şehir</label>
+                                <select type="text" id="createDeliveryCity" class="form-control" name="createDeliveryCity" onchange="onDeliveryCityChange()">Teslim Şehir</select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="createRentDate" class="form-label">Alış Tarihi</label>
+                                <input type="date" class="form-control" id="createRentDate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="createDeliveryDate" class="form-label">Teslim Tarihi</label>
+                                <input type="date" class="form-control" id="createDeliveryDate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="createRentingAmount" class="form-label">Kiralama Tutarı</label>
+                                <input type="number" class="form-control" id="createRentingAmount">
+                            </div>
+                            <div class="mb-3">
+                                <label for="driverLicence" class="form-label">Ehliyet Tipi</label>
+                                <input type="text" class="form-control" id="driverLicence">
+                            </div>
+                            <div class="mb-3">
+                                <label for="driverLicenceNumber" class="form-label">Ehliyet Seri No</label>
+                                <input type="text" class="form-control" id="driverLicenceNumber">
+                            </div>
+                            <div class="mb-3">
+                                <label for="user" class="form-label">Kullanıcı</label>
+                                <input type="text" class="form-control" id="user">
+                            </div>
+                           <button type="button" class="btn btn-primary" id="createRentBtn" onclick="createRent()">Kiralamayı Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     
@@ -174,7 +227,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#addCarDetailModal').on('hidden.bs.modal', function () {
+            $('#showRentModal').on('hidden.bs.modal', function () {
                 // Modal kapatıldığında arka plan elemanını temizle
                 $('.modal-backdrop').remove();
             });

@@ -29,7 +29,7 @@ function updateTable(){
                 buttonState="<button type='button' class='btn btn-warning' data-toggle='modal' data-target='#showRentModal' onclick='openShowRentModal(" + inventory.id + ")'>Kiralama Detaylarını Gör</button> "
             } else {
                 renting="Garajda"
-                buttonState="<button type='button' class='btn btn-warning' data-toggle='modal' data-target='#editCarModal' onclick='openEditCarModal(" + inventory.id + ")'>Kirala</button> "
+                buttonState="<button type='button' class='btn btn-warning' data-toggle='modal' data-target='#createRentModal' onclick='openCreateRentModal(" + inventory.carId + ")'>Kirala</button> "
             }
 
             var row = "<tr>" +
@@ -55,6 +55,8 @@ function updateTable(){
 
 document.addEventListener('DOMContentLoaded',function(){
     updateTable();
+    rentCityDropdownList();
+    deliveryCityDropdownList();
 });
 
 function openShowRentModal(carId){
@@ -82,6 +84,7 @@ function openShowRentModal(carId){
         document.getElementById('rentDate').value=formatDate(rent.rentingDate);
         document.getElementById('deliveryDate').value=formatDate(rent.deliveryDate);
         document.getElementById('rentingDay').value=rent.rentingDay;
+        document.getElementById('endRentBtn').onclick=function(){endRenting(rent.id)};
     })
     .catch((error)=>{
         console.log('Error:',error);
@@ -91,4 +94,124 @@ function openShowRentModal(carId){
 function formatDate(inputDate) {
     const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
     return new Date(inputDate).toLocaleDateString('tr-TR', options);
+}
+
+
+function openCreateRentModal(carId){
+    document.getElementById('carId').value=carId;
+}
+
+function createRent(){
+    const carId=document.getElementById('carId').value;
+    const userId=1;
+    const driverLicenceType=document.getElementById('driverLicence').value;
+    const driverLicenceNo=document.getElementById('driverLicenceNumber').value;
+    const rentCityId=document.getElementById('createRentCity').value;
+    const deliveryCityId=document.getElementById('createDeliveryCity').value;
+    const rentingDate=document.getElementById('createRentDate').value;
+    const deliveryDate=document.getElementById('createDeliveryDate').value;
+    const rentData={
+        carId:carId,
+        userId:userId,
+        driverLicenceType:driverLicenceType,
+        driverLicenceNo:driverLicenceNo,
+        rentCityId:rentCityId,
+        deliveryCityId:deliveryCityId,
+        rentingDate:rentingDate,
+        deliveryDate:deliveryDate
+    };
+
+    console.log(rentData);
+
+}
+
+
+function endRenting(rentId){
+    if(confirm('Kiralama sonladırılacak. Devam etmek istiyor musunuz?')){
+        fetch('http://localhost:8080/rent/endrent/'+rentId,{
+            method:'PUT',
+            headers:{
+                'Content-type':'application/json',
+                Authorization:'Bearer '+jwtToken
+            }
+        })
+        .then(response=>{
+            if (response.ok) {
+                $('#showCarModal').modal('hide');
+                updateTable();
+            }else{
+                console.error('Error:',response.status)
+            }
+        })
+        .catch((error)=>{
+            console.error('Error: ',error)
+        });
+    }
+}
+
+
+function rentCityDropdownList(){
+    fetch('http://localhost:8080/api/city',{
+        method:'GET',
+        headers:{
+            'Accept':'application/json',
+            'Content-type':'application/json'
+        }   
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        var cityDropdown=document.getElementById('createRentCity');
+
+        cityDropdown.innerHTML=''
+        data.forEach(city=>{
+            var option = document.createElement('option');
+            option.value=city.id;
+            option.text=city.cityName;
+            cityDropdown.add(option);
+        });
+    })
+    .catch(error=>{
+        console.error('Error',error);
+    });
+}
+
+var selectedRentCityId;
+
+function onRentCityChange(){
+    var dropdown=document.getElementById('createRentCity');
+    selectedRentCityId=dropdown.value;
+    districtDropdownList(selectedRentCityId);
+}
+
+function deliveryCityDropdownList(){
+    fetch('http://localhost:8080/api/city',{
+        method:'GET',
+        headers:{
+            'Accept':'application/json',
+            'Content-type':'application/json'
+        }   
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        var cityDropdown=document.getElementById('createDeliveryCity');
+
+        cityDropdown.innerHTML=''
+        data.forEach(city=>{
+            var option = document.createElement('option');
+            option.value=city.id;
+            option.text=city.cityName;
+            cityDropdown.add(option);
+        });
+    })
+    .catch(error=>{
+        console.error('Error',error);
+    });
+}
+
+var selectedDeliveryCityId;
+
+function onDeliveryCityChange(){
+    var dropdown=document.getElementById('createDeliveryCity');
+    selectedDeliveryCityId=dropdown.value;
+    districtDropdownList(selectedDeliveryCityId);
 }
